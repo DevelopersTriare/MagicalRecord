@@ -33,9 +33,10 @@ static id MagicalRecordUbiquitySetupNotificationObserver;
         [self MR_setRootSavingContext:rootContext];
 
         NSManagedObjectContext *defaultContext = [self MR_newMainQueueContext];
+        [defaultContext performBlockAndWait:^{
+            [defaultContext setPersistentStoreCoordinator:coordinator];
+        }];
         [self MR_setDefaultContext:defaultContext];
-
-        [defaultContext setParentContext:rootContext];
     }
 }
 
